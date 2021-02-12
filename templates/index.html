@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <title>Suggest me</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link
+    rel="stylesheet"
+    href="https://www.w3schools.com/lib/w3-theme-dark-grey.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Open+Sans"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: "Open Sans", sans-serif;
+    }
+  
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+  
+  
+    .left-sidebar-signup input[type="text"] {
+      width: 100%;
+    }
+  
+    .signup {
+      margin-bottom: 10px;
+    }
+  
+
+  
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 16px;
+      resize: none;
+    }
+  
+    .receiver-name {
+      float: right;
+    }
+
+  </style>
+
+  <body class="w3-theme-l1">
+    <!-- Navbar -->
+        <div class="w3-top">
+          <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+        
+            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-none" title="My Account">
+              <img
+                src="https://render.fineartamerica.com/images/rendered/default/print/8/8/break/images/artworkimages/medium/1/flying-raven-suren-nersisyan.jpg"
+                class="w3-circle" style="height: 23px; width: 23px" alt="Raven" />
+            </a>
+          </div>
+        </div>
+
+
+    <!-- Page Container -->
+    <div
+      class="w3-container w3-content"
+      style="max-width: 1400px; margin-top: 80px"
+    >
+      <!-- The Grid -->
+      <div class="w3-row">
+        <!-- Left Column -->
+        <div class="w3-col m3">
+          <!-- Profile -->
+          <div class="w3-card w3-round w3-white">
+            <div class="w3-container">
+              <h4 class="w3-center">CREATE NEW CATEGORY</h4>
+              <p class="w3-center">
+              </p>
+              <hr />
+              <form action="/addCategory" method="POST" class="left-sidebar-signup">
+                <input type="text" placeholder="New category" name="category" /><br />
+                <button type="submit" class="w3-button w3-theme signup">
+                  </i> Add
+                </button>
+              </form>
+            </div>
+          </div>
+          <br />
+
+          <!-- Alert Box -->
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        
+                        {% for message in messages %}
+                        <div
+                          class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+                          <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+                            <i class="fa fa-remove"></i>
+                          </span><br />
+                          <p>{{ message }} </p>
+                        </div>
+                        {% endfor %}
+                        
+                        {% else %}
+                        
+                        <div
+                          class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+                          <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+                            <i class="fa fa-remove"></i>
+                          </span>
+                          <p><strong>Hey!</strong></p>
+                          <p>Welcome to Reduct suggestion forum.</p>
+                          <hr />
+                        
+                          </p>Share your favourite movies, books, music and much more. Add any category you want and share your favourites and add reviews, or simply add sources to funny cat videos!! </p>
+                        </div>
+                        
+                        {% endif %}
+                        {% endwith %}
+
+          <!-- End Left Column -->
+        </div>
+
+        <!-- Middle Column -->
+        <div class="w3-col m7">
+                  <div class="w3-row-padding">
+                    <div class="w3-col m12">
+                      <div class="w3-card w3-round w3-white">
+                        <div class="w3-container w3-padding">
+                          {%if current_category.name %}
+                          <h6 class="w3-opacity">Add your favorite {{current_category.name}}.</h6>
+                          {% else %}
+                          <h6 class="w3-opacity">Add your favorite movie.But first,please create a movie category.</h6>
+                          {% endif %}
+                          <form action="/browse/{{current_category.name}}" method="POST" class="form-container">
+                            <input type="text" placeholder="Add Your Favorite" name="favorite"/>
+                            <input type="hidden" value="{{current_category.id}}" name="item-category"/>
+                            <textarea placeholder="Write your review or provide source description" name="review"></textarea>
+                            <button type="submit" class="w3-button w3-theme">
+                              <i class="fa fa-pencil"></i> Add
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% for item in items%}
+                    <div class="w3-container w3-card w3-white w3-round w3-margin w3-theme-l4">
+                      <br />
+                      <span class="w3-right w3-opacity" >{{item.date_created.date()}}</span>
+                      <h4 >{{item.name}}</h4>
+                      <br />
+                      <p>
+                        {{ item.review }}
+                      </p>
+                      <input type="button" id="upvote-button{{item.id}}" class="w3-btn" style="background-color: teal;outline: none; margin: 5px; " onClick="upvote('{{ item.id }}')" />
+                      <span class=" w3-opacity" id="{{item.id}}">{{item.upvotes}}</span>
+                      <input type="button" id ="downvote-button{{item.id}}" class="w3-btn" style="background-color: red;outline: none; margin: 5px ;" onClick="downvote('{{ item.id }}')" />
+                    
+                    </div>
+                  {% endfor %}
+
+
+          <!-- End Middle Column -->
+        </div>
+
+        <!-- Right Column -->
+        <div class="w3-col m2">
+
+          {% for category in categories %}
+            <form action="/browse/{{category.name}}">
+            
+              <div class="w3-card w3-white w3-padding-16 w3-center w3-button w3-block w3-round w3-theme-l3" style="padding: 0%;">
+                <button class="w3-button" style="width: 100%; outline: none;">
+                  <p>{{category.name}}</p>
+                
+                </button>
+
+              </div>
+            
+            
+            </form><br/>
+
+          {% endfor %}
+          
+          <br />
+
+          <!-- End Right Column -->
+        </div>
+
+        <!-- End Grid -->
+      </div>
+
+      <!-- End Page Container -->
+    </div>
+    <br />
+
+    <footer class="w3-container w3-theme-d5">
+      <p>
+        Powered by
+        <a href="https://www.w3schools.com/w3css/default.asp" target="_blank"
+          >w3.css</a
+        >
+      </p>
+    </footer>
+
+    <script>
+      function upvote(id){
+        $.ajax({
+          url:'/increment',
+          data:id,
+          type: 'POST',
+          success : function(response){
+            console.log(response);
+            response_object = JSON.parse(response)
+            // let selected = ('#' + id)
+            // console.log(selected)
+            $('#' + id).text(response_object.upvotes)
+
+            animation(id)
+
+          }
+        })
+
+
+        console.log(id);
+      }
+
+            function downvote(id) {
+                $.ajax({
+                  url: '/decrement',
+                  data: id,
+                  type: 'POST',
+                  success: function (response) {
+                    console.log(response);
+                    response_object = JSON.parse(response)
+                    $('#' + id).text(response_object.upvotes)
+
+                    animation(id)
+
+                  }
+                })
+                 console.log(id);
+            }
+
+              function hide(id){
+                $('#upvote-button' + id).css({ opacity: 1.0, visibility: "visible" }).animate({ opacity: 0 }, 200);
+                $('#downvote-button' + id).css({ opacity: 1.0, visibility: "visible" }).animate({ opacity: 0 }, 200);
+              }
+
+              function animation(id){
+                hide(id)
+                setTimeout(function(){
+                  alert('Thank you for your upvote. Please wait sometime for further upvotes. This is to prevent biased opinion.')
+
+                },2000)
+                setTimeout(function () {
+
+                  $('#upvote-button' + id).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 });
+                  $('#downvote-button' + id).css({ opacity: 0.0, visibility: "visible" }).animate({ opacity: 1.0 });
+                }, 20000)
+
+              }
+
+    </script>
+  </body>
+</html>
