@@ -107,37 +107,6 @@ def addcategory():
         return redirect('/')
 
 
-@app.route('/collectgarbage')
-def delete():
-    items = Item.query.filter(Item.upvotes < -5).all()
-    print(items)
-    for item in items:
-        db.session.delete(item)
-        db.session.commit()
-    return redirect('/')
-
-
-@app.route('/delete/<string:category>')
-def deleteCategory(category):
-    try:
-        category_todelete = Category.query.filter_by(name=category).first()
-        db.session.delete(category_todelete)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return redirect('/')
-
-
-@app.route('/delete/item/<int:id>')
-def deleteItem(id):
-    try:
-        item_todelete = Item.query.get_or_404(id)
-        db.session.delete(item_todelete)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return redirect('/')
-
 
 @app.route('/increment', methods=['POST'])
 def increment():
