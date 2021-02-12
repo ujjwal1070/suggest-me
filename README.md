@@ -6,11 +6,13 @@ to run the app follow these commands after cloning the project
 pip install requirements.txt
 move into the project folder
 
-suggest-me> python
+(enter python interpreter)
+  suggest-me> python
 
->> from app import db
->> db.create_all()
->> exit()
+      from app import db
+      db.create_all()
+      exit()
+(exit interpreter)
 
 suggest-me> python app.py
 
