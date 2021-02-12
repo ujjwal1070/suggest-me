@@ -10,7 +10,7 @@ pip install requirements.txt
 
 move into the project folder
 
-'''
+'
 suggest-me> python
 
 >> from app import db
@@ -19,5 +19,5 @@ suggest-me> python
 
 suggest-me> python app.py
 
-'''
+'
 visit the localhost server http://127.0.0.1:5000/
