@@ -3,16 +3,21 @@
 # Live version deployed at https://suggest-me.herokuapp.com/
 
 to run the app follow these commands after cloning the project
-
-pip install requirements.txt
-activate the environment
-
-      cd venv/scripts
-      ./activate
+move into the cloned project folder
 
 
-move into the project folder
+      cd suggest-me
+      suggest-me> pip install requirements.txt  
+      
+  activate the environment
 
+      suggest-me> cd venv/scripts
+      suggest-me/venv/scripts> ./activate
+
+
+move back into the project folder
+         
+      (venv)suggest-me/venv/scripts> cd ../..
       (venv)suggest-me> 
 
 (enter python interpreter)
